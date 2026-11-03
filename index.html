@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DARATECHSOLUTION FUNDS LOAN</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#172033;font-family:Arial,sans-serif}
+header{background:#102b50;color:white;padding:22px 18px;text-align:center}header img{width:94px;height:94px;object-fit:contain;background:white;border-radius:18px;padding:5px}
+h1{font-size:20px;margin:12px 0 4px}.sub{font-size:13px;opacity:.85}
+main{max-width:540px;margin:18px auto;padding:0 14px}.panel{background:white;border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 3px 14px #102b5010}
+.amount{font-size:30px;font-weight:700;color:#0b6b50}.muted{color:#64748b;font-size:13px;line-height:1.5}
+label{display:block;font-weight:600;font-size:13px;margin:13px 0 6px}input,select,textarea{width:100%;padding:12px;border:1px solid #ccd4df;border-radius:9px;font-size:15px;background:white}
+button{width:100%;border:0;border-radius:10px;padding:15px;background:#087a55;color:white;font-size:16px;font-weight:700;margin-top:14px}
+.notice{background:#fff8e6;border-left:4px solid #e6a323;padding:11px;border-radius:7px;font-size:12px;line-height:1.5}
+small{font-size:12px;color:#64748b}a{color:#087a55}
+</style></head><body>
+<header><img src="darate-logo.png" alt="DARATECHSOLUTION logo"><h1>DARATECHSOLUTION FUNDS LOAN</h1><div class="sub">Loan application</div></header>
+<main>
+<section class="panel"><div class="muted">Fixed loan amount</div><div class="amount">₦5,000</div><p class="muted">Interest: 20% (₦1,000) · Repayment period: 7 days · Total repayment: <b>₦6,000</b></p></section>
+<section class="panel">
+<h3>Applicant details</h3>
+<form id="loanForm">
+<label>Full name *</label><input id="name" required maxlength="80" autocomplete="name">
+<label>Phone number *</label><input id="phone" required type="tel" maxlength="20" autocomplete="tel">
+<label>Home address *</label><textarea id="address" required maxlength="250" rows="2"></textarea>
+<h3>Bank details</h3>
+<p class="muted">Only provide details needed to receive a disbursement. Do not enter your PIN, password, OTP or card security code.</p>
+<label>Bank name *</label><input id="bank" required maxlength="60">
+<label>Account name *</label><input id="accountName" required maxlength="80">
+<label>Account number *</label><input id="accountNumber" required inputmode="numeric" pattern="[0-9]{10}" maxlength="10">
+<h3>Video verification</h3>
+<p class="muted">Record a short video saying: “My name is [your full name]. I am applying for a ₦5,000 loan from DARATECHSOLUTION FUNDS LOAN.”</p>
+<label>Select recorded video *</label><input id="video" type="file" accept="video/*" capture="user" required>
+<p class="notice">The video will not be attached automatically to the WhatsApp message. After WhatsApp opens, attach the video manually in the chat. The app does not upload or store your video.</p>
+<label style="font-weight:400"><input id="consent" type="checkbox" style="width:auto"> I agree to send my application details to DARATECHSOLUTION FUNDS LOAN via WhatsApp and have read the privacy notice and loan terms.</label>
+<button type="submit">Continue to WhatsApp</button>
+</form></section>
+<section class="panel"><h3>Before applying</h3><p class="muted">Submitting an application does not guarantee approval or disbursement. Review and confirm the written loan agreement, all fees, due date, late-payment rules and lender contact details before accepting any offer.</p><p class="muted">Your application details are shared with the lender through WhatsApp only after you press the button. Avoid sharing passwords, PINs, OTPs or card details.</p></section>
+</main>
+<script>
+document.getElementById('loanForm').addEventListener('submit', function(e){
+ e.preventDefault();
+ const video=document.getElementById('video').files[0];
+ if(!video){alert('Please record or select your verification video.');return;}
+ if(!document.getElementById('consent').checked){alert('Please give consent before continuing.');return;}
+ const v=id=>document.getElementById(id).value.trim();
+ const msg = [
+ 'DARATECHSOLUTION FUNDS LOAN — LOAN APPLICATION',
+ 'Full name: '+v('name'),
+ 'Phone: '+v('phone'),
+ 'Address: '+v('address'),
+ 'Loan requested: NGN 5,000',
+ 'Interest (20%): NGN 1,000',
+ 'Total repayment: NGN 6,000',
+ 'Repayment period: 7 days',
+ 'Bank: '+v('bank'),
+ 'Account name: '+v('accountName'),
+ 'Account number: '+v('accountNumber'),
+ 'Video selected: '+video.name+' (I will attach it in this WhatsApp chat).'
+ ].join('\n');
+ if(window.AndroidBridge && AndroidBridge.openWhatsApp){AndroidBridge.openWhatsApp(msg);}
+ else {window.location.href='https://wa.me/2347072913251?text='+encodeURIComponent(msg);}
+});
+</script></body></html>
